@@ -79,7 +79,7 @@ public class LanguagePortuguese : Language {
 	public override string updates
 	{
 		get {
-			return "updates";
+			return "atualizações";
 		}
 	}
 
