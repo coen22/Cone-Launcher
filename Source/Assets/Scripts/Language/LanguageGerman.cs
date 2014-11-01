@@ -13,6 +13,13 @@ public class LanguageGerman : Language {
 	// return "hi, ";
 	// return "salut, ";
 
+	public override string[] languages
+	{
+		get {
+			return new string[] {"english", "french", "dutch", "german", "portuguese", "spanish", "italian"};
+		}
+	}
+
 	public override string hello
 	{
 		get {

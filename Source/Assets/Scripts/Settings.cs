@@ -38,7 +38,7 @@ public class Settings : MonoBehaviour, OuyaSDK.IFetchGamerInfoListener {
 		guiSkin = guiSkinPublic;
 		wallpaper = wallpaperPublic;
 
-		lang = SetLanguage("");
+		SetLanguage("");
 
 		settings.Add (lang.wifi);
 		settings.Add(lang.bluetooth);
@@ -56,28 +56,28 @@ public class Settings : MonoBehaviour, OuyaSDK.IFetchGamerInfoListener {
 		OuyaSDK.fetchGamerInfo();
 	}
 
-	public static Language SetLanguage(string language) {
+	public static void SetLanguage(string language) {
 		switch (language.ToLower()) {
 			case "dutch":
-				return new LanguageDutch();
+				Settings.lang = new LanguageDutch();
 			break;
 			case "french":
-				return new LanguageFrench();
+				Settings.lang = new LanguageFrench();
 			break;
 			case "german":
-				return new LanguageGerman();
+				Settings.lang = new LanguageGerman();
 			break;
 			case "italian":
-				return new LanguageItalian();
+				Settings.lang = new LanguageItalian();
 			break;
 			case "portuguese":
-				return new LanguagePortuguese();
+				Settings.lang = new LanguagePortuguese();
 			break;
 			case "spanish":
-				return new LanguageSpanish();
+				Settings.lang = new LanguageSpanish();
 			break;
 			default:
-				return new Language();
+				Settings.lang = new Language();
 			break;
 		}
 	}

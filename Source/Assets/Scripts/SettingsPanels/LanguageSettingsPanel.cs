@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class LanguageSettingsPanel : SettingsPanel {
-
-	public List<string> languages = new List<string>(){"english", "french", "dutch", "german", "portuguese", "spanish", "italian"};
-	public int selectedLanguage;
+	
+	public static int selectedLanguage;
 
 	public override string Title
 	{
@@ -24,7 +23,7 @@ public class LanguageSettingsPanel : SettingsPanel {
 					timer = 0.1f;
 				}
 			} else if (InputManager.GetAxis ("Vertical", 0) < -0.5f) {
-				if (selectedLanguage < languages.Count - 1) {
+				if (selectedLanguage < Settings.lang.languages.Length - 1) {
 					selectedLanguage ++;
 					timer = 0.1f;
 				}
@@ -32,7 +31,8 @@ public class LanguageSettingsPanel : SettingsPanel {
 		}
 
 		if (InputManager.GetButtonDown("o", 0)) {
-			Settings.lang = Settings.SetLanguage(languages[selectedLanguage]);
+			Settings.lang = new Language();
+			Settings.SetLanguage(Settings.lang.languages[selectedLanguage]);
 		}
 	}
 
@@ -42,20 +42,19 @@ public class LanguageSettingsPanel : SettingsPanel {
 
 		Settings.guiSkin.box.fontSize = Mathf.RoundToInt(Screen.width*0.025f);
 
-		foreach(string s in languages) {
-			Debug.Log(s);
+		for(int i = 0; i < Settings.lang.languages.Length; i++) {
 
-			if (s == languages[selectedLanguage]) {
+			if (Settings.lang.languages[i] == Settings.lang.languages[selectedLanguage]) {
 				Settings.guiSkin.box.normal.textColor = new Color (1, 1, 1);
 			} else {
 				Settings.guiSkin.box.normal.textColor = new Color (1, 1, 1, 0.65f);
 			}
 			
 			GUI.Box (new Rect (Screen.width * 0.41f,
-			                   Screen.height * 0.25f + Screen.height * 0.075f * languages.IndexOf(s),
-			                   Screen.width * 0.25f,
-			                   Screen.width * 0.05f),
-			         s.ToUpper());
+								Screen.height * 0.25f + Screen.height * 0.075f * i,
+								Screen.width * 0.25f,
+								Screen.width * 0.05f),
+			         			Settings.lang.languages[i].ToUpper());
 		}
 
 		// Show Tooltips

@@ -2,7 +2,14 @@
 using System.Collections;
 
 public class LanguageDutch : Language {
-	
+
+	public override string[] languages
+	{
+		get {
+			return new string[] {"engels", "frans", "nederlands", "duits", "portugees", "spaans", "italiaans"};
+		}
+	}
+
 	public override string hello
 	{
 		get {

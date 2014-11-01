@@ -3,6 +3,13 @@ using System.Collections;
 
 public class Language {
 
+	public virtual string[] languages
+	{
+		get {
+			return new string[] {"english", "french", "dutch", "german", "portuguese", "spanish", "italian"};
+		}
+	}
+
 	public virtual string hello
 	{
 		get {

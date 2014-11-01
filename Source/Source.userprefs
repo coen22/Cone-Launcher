@@ -1,8 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../ClienOne/Assets/Shaders/Silhouette.shader">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SettingsPanels/LanguageSettingsPanel.cs">
     <Files>
-      <File FileName="../../ClienOne/Assets/Shaders/Silhouette.shader" Line="39" Column="13" />
+      <File FileName="Assets/Scripts/SettingsPanels/LanguageSettingsPanel.cs" Line="42" Column="3" />
+      <File FileName="Assets/Scripts/Language/LanguageDutch.cs" Line="20" Column="26" />
+      <File FileName="Assets/Scripts/Language/LanguageFrench.cs" Line="16" Column="17" />
+      <File FileName="Assets/Scripts/Language/LanguageGerman.cs" Line="29" Column="2" />
+      <File FileName="Assets/Scripts/Language/LanguageItalian.cs" Line="16" Column="17" />
+      <File FileName="Assets/Scripts/Language/LanguagePortuguese.cs" Line="16" Column="17" />
+      <File FileName="Assets/Scripts/Language/LanguageSpanish.cs" Line="16" Column="17" />
+      <File FileName="Assets/Scripts/Language/Language.cs" Line="6" Column="8" />
+      <File FileName="Assets/Scripts/Settings.cs" Line="59" Column="51" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
