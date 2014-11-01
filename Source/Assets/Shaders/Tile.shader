@@ -6,7 +6,7 @@
 	
     SubShader {
         Pass {
-        	LOD 400
+        	LOD 100
         
             CGPROGRAM
             #pragma vertex vert
