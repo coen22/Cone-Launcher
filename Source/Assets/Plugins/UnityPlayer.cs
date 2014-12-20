@@ -1,4 +1,4 @@
-﻿#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 
 using System;
 using UnityEngine;
@@ -17,18 +17,29 @@ namespace com.unity3d.player
             {
                 {
                     string strName = "com/unity3d/player/UnityPlayer";
-                    _jcUnityPlayer = AndroidJNI.FindClass(strName);
-                    if (_jcUnityPlayer != IntPtr.Zero)
+                    IntPtr localRef = AndroidJNI.FindClass(strName);
+                    if (localRef != IntPtr.Zero)
                     {
                         Debug.Log(string.Format("Found {0} class", strName));
+                        _jcUnityPlayer = AndroidJNI.NewGlobalRef(localRef);
+                        AndroidJNI.DeleteLocalRef(localRef);
                     }
                     else
                     {
                         Debug.LogError(string.Format("Failed to find {0} class", strName));
-                        return;
                     }
                 }
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogError(string.Format("Exception loading JNI - {0}", ex));
+            }
+        }
 
+        private static void JNIFind()
+        {
+            try
+            {
                 {
                     string strField = "currentActivity";
                     _jfCurrentActivity = AndroidJNI.GetStaticFieldID(_jcUnityPlayer, strField, "Landroid/app/Activity;");
@@ -43,9 +54,9 @@ namespace com.unity3d.player
                     }
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                Debug.LogError("Exception finding UnityPlayer class");
+                Debug.LogError(string.Format("Exception loading JNI - {0}", ex));
             }
         }
 
@@ -53,6 +64,8 @@ namespace com.unity3d.player
         {
             get
             {
+                JNIFind();
+
                 if (_jcUnityPlayer == IntPtr.Zero)
                 {
                     Debug.LogError("_jcUnityPlayer is not initialized");
@@ -68,8 +81,12 @@ namespace com.unity3d.player
                 if (result == IntPtr.Zero)
                 {
                     Debug.LogError("Failed to get current activity");
+                    return IntPtr.Zero;
                 }
-                return result;
+                
+                IntPtr globalRef = AndroidJNI.NewGlobalRef(result);
+                AndroidJNI.DeleteLocalRef(result);
+                return globalRef;
             }
         }
     }

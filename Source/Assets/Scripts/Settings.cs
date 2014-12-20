@@ -2,7 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Settings : MonoBehaviour, OuyaSDK.IFetchGamerInfoListener {
+public class Settings : MonoBehaviour
+#if UNITY_ANDROID && !UNITY_EDITOR	
+	, OuyaSDK.IRequestGamerInfoListener
+#endif
+{
 	public Texture oButtonPublic;
 	public Texture uButtonPublic;
 	public Texture yButtonPublic;
@@ -51,9 +55,14 @@ public class Settings : MonoBehaviour, OuyaSDK.IFetchGamerInfoListener {
 
 		guiSkin.box.fontSize = Mathf.RoundToInt(Screen.width*0.02f);
 
-		OuyaSDK.registerFetchGamerInfoListener(this);
-		yield return new WaitForSeconds (0.5f);
-		OuyaSDK.fetchGamerInfo();
+		#if UNITY_ANDROID && !UNITY_EDITOR
+			OuyaSDK.registerRequestGamerInfoListener(this);
+
+			yield return new WaitForSeconds (0.5f);
+		OuyaSDK.requestGamerInfo();
+		#endif
+
+		yield return null;
 	}
 
 	public static void SetLanguage(string language) {
@@ -83,23 +92,25 @@ public class Settings : MonoBehaviour, OuyaSDK.IFetchGamerInfoListener {
 	}
 
 	// OUYA Stuff
-	public void OuyaFetchGamerInfoOnSuccess(string gamerUUID, string gamerUserName)
-	{
-		userName = gamerUserName;
+	public void RequestGamerInfoOnSuccess(string uuid, string username) {
+		userName = username;
 	}
-	
-	public void OuyaFetchGamerInfoOnFailure(int errorCode, string errorMessage)
-	{
+
+	public void RequestGamerInfoOnSuccess(OuyaSDK.GamerInfo info) {
+	}
+
+	public void RequestGamerInfoOnFailure(int errorCode, string errorMessage) {
 		userName = System.Reflection.MethodBase.GetCurrentMethod().ToString();
 	}
 	
-	public void OuyaFetchGamerInfoOnCancel()
-	{
+	public void RequestGamerInfoOnCancel() {
 		userName = System.Reflection.MethodBase.GetCurrentMethod().ToString();
 	}
-	
+
+	#if UNITY_ANDROID && !UNITY_EDITOR
 	void OnDestroy()
 	{
-		OuyaSDK.unregisterFetchGamerInfoListener(this);
+		OuyaSDK.unregisterRequestGamerInfoListener(this);
 	}
+	#endif
 }

@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2012-2014 OUYA, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package tv.ouya.sdk;
 
 import android.os.Bundle;
@@ -11,7 +27,15 @@ import tv.ouya.console.api.OuyaController;
 
 public class OuyaUnityActivity extends OuyaActivity
 {
-	private static final String TAG = OuyaUnityActivity.class.getSimpleName();	
+	private static final String TAG = OuyaUnityActivity.class.getSimpleName();
+
+	// ****
+	// Performance testing
+	private long mKeyDownDetected = System.nanoTime();
+	private long mKeyUpDetected = System.nanoTime();	
+	private final long TICKS_SECOND = 1000000000;
+	// end of -- performance testing
+	// *****
 
 	static {
     	Log.i(TAG, "Loading lib-ouya-ndk...");
@@ -39,6 +63,35 @@ public class OuyaUnityActivity extends OuyaActivity
 		return super.dispatchKeyEvent(keyEvent);
 	}
 	*/
+
+	// ****
+	// Performance testing
+	/*
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent keyEvent) {
+
+		if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+			mKeyDownDetected = System.nanoTime();
+		}
+		
+		else if (keyEvent.getAction() == KeyEvent.ACTION_UP) {
+			mKeyUpDetected = System.nanoTime();
+		}
+
+		return super.dispatchKeyEvent(keyEvent);
+	}
+	*/
+	public void debugDisplayKeyDownElapsed() {
+		long elapsed = System.nanoTime() - mKeyDownDetected;
+		Log.i(TAG, "debugDisplayKeyDownElapsed: Elapsed Down - "  + String.format("%1$,.5f", elapsed / (double) TICKS_SECOND));
+	}
+
+	public void debugDisplayKeyUpElapsed() {
+		long elapsed = System.nanoTime() - mKeyUpDetected;
+		Log.i(TAG, "debugDisplayKeyUpElapsed: Elapsed Up - "  + String.format("%1$,.5f", elapsed / (double) TICKS_SECOND));
+	}
+	// ****
+	// End of Performance testing
 
 	@Override
 	public boolean onGenericMotionEvent(MotionEvent motionEvent) {

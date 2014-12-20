@@ -148,7 +148,7 @@ public class LanguageFrench : Language {
 		}
 	}
 
-	public virtual string select
+	public override string select
 	{
 		get {
 			return "sélectionner";

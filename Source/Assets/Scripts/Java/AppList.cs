@@ -1,22 +1,27 @@
-﻿// #if UNITY_ANDROID && !UNITY_EDITOR
-
+﻿
 using UnityEngine;
 using System.Collections;
-using System.IO;
-using System.IO.Compression;
 using System.Collections.Generic;
 using Android.Runtime;
 
 public class AppList : MonoBehaviour {
 
-	public static FileInfo[] apps;
-	public static List<Texture> appIcons;
+	public class app {
+		string name;
+		string id;
+		Texture icon;
 
-	public static List<string> GetAppList(){
-		AndroidJavaClass apps = new AndroidJavaClass("");
-		return apps.Call<List<string>>("getAppsList");
+		public app(string n, string i, Texture ic) {
+			name = n;
+			id = i;
+			icon = ic;
+		}
+	}
 
-		return null;
+	public static List<app> apps;
+
+	public static void GetAppIcons() {
+		// System.IntPtr clas = AndroidJNI.FindCLass("MakeImageCache");
 	}
 
 	public static void LaunchApp(string bundleID){
@@ -30,4 +35,3 @@ public class AppList : MonoBehaviour {
 		ca.Call("startActivity",launchIntent);
 	}
 }
-// #endif

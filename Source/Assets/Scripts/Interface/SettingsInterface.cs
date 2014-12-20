@@ -65,20 +65,16 @@ public class SettingsInterface : Interface {
 		switch(catagory) {
 			case "wifi":
 				return new WifiSettingsPanel();
-			break;
 			case "language":
 				return new LanguageSettingsPanel();
-			break;
 			case "developer":
 				return new DeveloperSettingsPanel();
-			break;
 			default:
 				return new SettingsPanel();
-			break;
 		}
 	}
 
-	void OnGUI() {
+	public override void OnGUI() {
 		base.OnGUI ();
 
 		Settings.guiSkin.box.alignment = TextAnchor.MiddleLeft;
