@@ -25,7 +25,12 @@ import java.util.List;
 
 public class MakeImageCache {
 	
-    public List<Bitmap> getBitmaps() {
+	public static Bitmap[] bitmap;
+	public static String[] appID;
+	public static String[] name;
+	
+    public static void getApps() {
+    	
         PackageManager packageManager = context.getPackageManager();
         
         // OUYA Games
@@ -41,38 +46,48 @@ public class MakeImageCache {
         List<ResolveInfo> infos2 = packageManager.queryIntentActivities(mainIntent2, 0);
         infos.addAll(infos2);
         
+        ResolveInfo info;
         Resources resources;
-        List<Bitmap> out = new List<Bitmap>();
         String packageName;
-        for (ResolveInfo info : infos) {
+        
+        bitmap = new Bitmap[infos.size()];
+        appID = new String[infos.size()];
+        name = new String[infos.size()];
+        
+        for (int i = 0; i < appID.length; i++) {
+        		info = infos.get(i);
             packageName = info.activityInfo.applicationInfo.packageName;
             
-            // Check if image thumbnail for this package already exists
-            File thumbFile = new File("/sdcard/BAXY/thumbnails/" + packageName + ".png");
-            if (!thumbFile.exists()) {
-                //make
-                try {
-                    resources = packageManager.getResourcesForApplication(info.activityInfo.applicationInfo);
-                    int identifier = resources.getIdentifier(packageName + ":drawable/ouya_icon", "", "");
-                    Drawable ouyaImage = null;
-                    
-                    if (identifier == 0) {
-                        ouyaImage = info.loadIcon(packageManager);
-                    } else {
-                        ouyaImage = packageManager.getResourcesForApplication(info.activityInfo.applicationInfo).getDrawable(identifier);
-                    }
-                    
-                    out.add(((BitmapDrawable) ouyaImage).getBitmap());
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (Resources.NotFoundException e) {
-                    e.printStackTrace();
+            // get the icon
+            try {
+                resources = packageManager.getResourcesForApplication(info.activityInfo.applicationInfo);
+                int identifier = resources.getIdentifier(packageName + ":drawable/ouya_icon", "", "");
+                Drawable ouyaImage = null;
+                
+                if (identifier == 0) {
+                    ouyaImage = info.loadIcon(packageManager);
+                } else {
+                    ouyaImage = packageManager.getResourcesForApplication(info.activityInfo.applicationInfo).getDrawable(identifier);
                 }
+                
+                bitmap[i] = ((BitmapDrawable) ouyaImage).getBitmap();
+                appID[i] = packageName;
+                
+                ApplicationInfo ai;
+                try {
+                    ai = packageManager.getApplicationInfo( this.getPackageName(), 0);
+                } catch (final NameNotFoundException e) {
+                    ai = null;
+                }
+                
+                name[i] = (String) (ai != null ? packageManager.getApplicationLabel(ai) : "(unknown)");
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Resources.NotFoundException e) {
+                e.printStackTrace();
             }
         }
-        
-        return out;
     }
 }
