@@ -24,8 +24,7 @@ public class AppList : MonoBehaviour {
 	private static void GetAppIcons() {
 		IntPtr clas = AndroidJNI.FindClass ("MakeImageCache");
 		IntPtr funcID = AndroidJNI.GetMethodID(clas, "getBitmaps", "");
-		IntPtr func = AndroidJNI.CallStaticVoidMethod (clas, funcID, null);
-
+		AndroidJNI.CallStaticVoidMethod (clas, funcID, null);
 	}
 
 	public static bool LaunchApp(string bundleID){
