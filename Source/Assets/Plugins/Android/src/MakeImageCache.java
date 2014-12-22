@@ -1,3 +1,5 @@
+package com.example.test;
+
 /*
  * Special thanks to FrankkieNL
  * This code is based on his launcher
@@ -24,6 +26,8 @@ import java.io.InputStream;
 import java.util.List;
 
 public class MakeImageCache {
+	
+	public static Context context;
 	
 	public static Bitmap[] bitmap;
 	public static String[] appID;
@@ -72,18 +76,8 @@ public class MakeImageCache {
                 
                 bitmap[i] = ((BitmapDrawable) ouyaImage).getBitmap();
                 appID[i] = packageName;
-                
-                ApplicationInfo ai;
-                try {
-                    ai = packageManager.getApplicationInfo( this.getPackageName(), 0);
-                } catch (final NameNotFoundException e) {
-                    ai = null;
-                }
-                
-                name[i] = (String) (ai != null ? packageManager.getApplicationLabel(ai) : "(unknown)");
+                name[i] = info.activityInfo.applicationInfo.name;
             } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
                 e.printStackTrace();
             } catch (Resources.NotFoundException e) {
                 e.printStackTrace();

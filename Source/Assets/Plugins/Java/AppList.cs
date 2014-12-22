@@ -23,11 +23,31 @@ public class AppList : MonoBehaviour {
 
 	private static void GetAppIcons() {
 		IntPtr clas = AndroidJNI.FindClass ("MakeImageCache");
-		IntPtr funcID = AndroidJNI.GetMethodID(clas, "getBitmaps", "");
+		IntPtr funcID = AndroidJNI.GetMethodID(clas, "getApps", "()V");
 		AndroidJNI.CallStaticVoidMethod (clas, funcID, null);
+
+		/*
+		public static android.graphics.Bitmap[] bitmap;
+			Signature: [Landroid/graphics/Bitmap;
+		public static java.lang.String[] appID;
+			Signature: [Ljava/lang/String;
+		public static java.lang.String[] name;
+			Signature: [Ljava/lang/String;
+		public com.example.test.MakeImageCache();
+			Signature: ()V
+		*/
+
+		IntPtr bitmapID = AndroidJNI.GetStaticFieldID(clas, "bitmap", "[Landroid/graphics/Bitmap;");
+		IntPtr bitamps = AndroidJNI.GetStaticObjectField (clas, bitmapID);
+
+		IntPtr appIDID = AndroidJNI.GetStaticFieldID(clas, "appID", "[Ljava/lang/String;");
+		IntPtr appIDs = AndroidJNI.GetStaticObjectField (clas, appIDID);
+
+		IntPtr nameID = AndroidJNI.GetStaticFieldID(clas, "name", "[Ljava/lang/String;");
+		IntPtr names = AndroidJNI.GetStaticObjectField (clas, nameID);
 	}
 
-	public static bool LaunchApp(string bundleID){
+	public static bool LaunchApp(string bundleID) {
 		AndroidJavaClass up = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 		AndroidJavaObject ca = up.GetStatic<AndroidJavaObject>("currentActivity");
 		AndroidJavaObject packageManager = ca.Call<AndroidJavaObject>("getPackageManager");
