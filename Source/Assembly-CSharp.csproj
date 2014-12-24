@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\Interface\SettingsInterface.cs" />
      <Compile Include="Assets\Scripts\Interface\TilesInterface.cs" />
      <Compile Include="Assets\Scripts\Interface\ZoomAnimation.cs" />
+     <Compile Include="Assets\Scripts\Java\AppList.cs" />
      <Compile Include="Assets\Scripts\Language\Language.cs" />
      <Compile Include="Assets\Scripts\Language\LanguageDutch.cs" />
      <Compile Include="Assets\Scripts\Language\LanguageFrench.cs" />

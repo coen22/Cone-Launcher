@@ -55,7 +55,6 @@
      <Compile Include="Assets\Plugins\InputStream.cs" />
      <Compile Include="Assets\Plugins\JSONArray.cs" />
      <Compile Include="Assets\Plugins\JSONObject.cs" />
-     <Compile Include="Assets\Plugins\Java\AppList.cs" />
      <Compile Include="Assets\Plugins\JniHandleOwnership.cs" />
      <Compile Include="Assets\Plugins\OutputStream.cs" />
      <Compile Include="Assets\Plugins\OuyaContent.cs" />

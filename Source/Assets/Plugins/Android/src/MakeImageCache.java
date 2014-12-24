@@ -29,9 +29,17 @@ public class MakeImageCache {
 	
 	public static Context context;
 	
-	public static Bitmap[] bitmap;
-	public static String[] appID;
-	public static String[] name;
+	private static Bitmap[] bitmap;
+	private static String[] appID;
+	private static String[] name;
+	
+	public static int getTotalApps() {
+		return name.length;
+	}
+	
+	public static String getName(int i) {
+		return name[i];
+	}
 	
     public static void getApps() {
     	
@@ -77,6 +85,7 @@ public class MakeImageCache {
                 bitmap[i] = ((BitmapDrawable) ouyaImage).getBitmap();
                 appID[i] = packageName;
                 name[i] = info.activityInfo.applicationInfo.name;
+                	System.out.println(name[i]);
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             } catch (Resources.NotFoundException e) {

@@ -17,7 +17,7 @@
 			uniform sampler2D _MainTex;
 			uniform sampler2D _Wallpaper;
 			
-			struct input
+			struct vertIn
 			{
 				float4 vertex : POSITION;
 				float4 tc : TEXCOORD0;
@@ -25,11 +25,11 @@
 			
             struct vertOut {
                 float4 pos : SV_POSITION;
-                float4 scrPos;
+                float4 scrPos : TEXCOORD1;
                 float2 tc;
             };
 
-            vertOut vert(input i) {
+            vertOut vert(vertIn i) {
                 vertOut o;
                 o.pos = mul (UNITY_MATRIX_MVP, i.vertex);
                 o.scrPos = ComputeScreenPos(o.pos);
